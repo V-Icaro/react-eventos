@@ -40,7 +40,7 @@ function Login(){
                 {msgTipo === 'sucesso' && <span><strong>WoW!</strong> Você está conectado! &#128526;</span>}
                     
                 {msgTipo === 'erro' && <span><strong>Ops!</strong> Verifique seus dados! &#128546;</span>}
-                </div>
+            </div>
 
             <div className="opcoes-login mt-5">
                 <a href="#" className="mx-2">Recuperar Senha</a>
