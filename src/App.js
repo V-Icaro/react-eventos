@@ -8,6 +8,7 @@ import Login from './view/login/';
 import NovoUsuario from './view/usuario-novo/';
 import Home from './view/home/';
 import RecuperarSenha from './view/recuperar_senha/';
+import EventoCadastro from './view/evento-cadastro/';
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
         <Route exact path='/novousuario' component={NovoUsuario} />
         <Route exact path="/login" component={Login} />
         <Route exact path="/recuperarsenha" component={RecuperarSenha} />
+        <Route exact path="/eventocadastro" component={EventoCadastro} />
       </Router>
     </Provider>
   );
