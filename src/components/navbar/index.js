@@ -9,7 +9,7 @@ function Navbar(){
 
     return (
         <nav className="navbar navbar-expand-lg">
-            <span className="navbar-brand text-white font-weight-bold">Eventos</span>
+            <i class="fas fa-icons text-white fa-2x mr-2"></i>
                 <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                     <i class="fas fa-bars font-white"></i>
                 </button>

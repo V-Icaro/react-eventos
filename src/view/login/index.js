@@ -41,7 +41,7 @@ function Login(){
             <form className="form-signin mx-auto">
 
             <div className="text-center mb-4">
-            <img className="mb-4" src="/docs/4.4/assets/brand/bootstrap-solid.svg" alt="" width="72" height="72" />
+            <i class="fas fa-icons text-white fa-7x mb-5"></i>
             <h1 className="h3 mb-3 font-weight-normal text-white font-weight-bold">Login</h1>
             </div>
         
@@ -60,9 +60,9 @@ function Login(){
             </div>
 
             <div className="opcoes-login mt-5">
-                <a href="#" className="mx-2">Recuperar Senha</a>
+                <Link to="/recuperarsenha" className="mx-2">Recuperar Senha</Link>
                 <span className="text-white">&#9733;</span>
-                <Link to="novousuario" className="mx-2">Quero cadastrar</Link>
+                <Link to="/novousuario" className="mx-2">Quero cadastrar</Link>
             </div>
             
 
