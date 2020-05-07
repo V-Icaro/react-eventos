@@ -1,7 +1,8 @@
 .img-banner {
+    
     width: 100%;
     min-height: 300px;
-    max-height: 350px;
+    max-height: 500px;
 }
 
 .box-info {
@@ -23,4 +24,8 @@
 
 .btn-editar i:hover{
     color: #614ea6;
+}
+
+.titulo, .views {
+    color: #614ea6; 
 }
