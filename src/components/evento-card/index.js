@@ -27,6 +27,7 @@ function EventoCard({key, id, img, titulo, detalhes, visualizacoes}){
                     <div className="col-6 text-right">
                         <i class="fas fa-eye"></i> <span>{visualizacoes}</span>
                     </div>
+                    
                 </div>
             </div>
         </div>
