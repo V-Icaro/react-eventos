@@ -41,7 +41,7 @@ function Login(){
             <form className="form-signin mx-auto">
 
             <div className="text-center mb-4">
-            <i class="fas fa-icons text-white fa-7x mb-5"></i>
+            <i className="fas fa-icons text-white fa-7x mb-5"></i>
             <h1 className="h3 mb-3 font-weight-normal text-white font-weight-bold">Login</h1>
             </div>
         

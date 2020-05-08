@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import './style.css';
-import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
 /* --COMPONENTS-- */ 
@@ -8,6 +7,7 @@ import Navbar from '../../components/navbar/';
 import EventoCard from '../../components/evento-card';
 
 import firebase from '../../config/firebase';
+import 'firebase/storage';
 
 function Home({match}){
 
@@ -37,12 +37,14 @@ function Home({match}){
             firebase.firestore().collection('eventos').get()
             .then(async (resultado) => {
                 await resultado.docs.forEach(doc => {
-                    if(doc.data().titulo.indexOf(pesquisa) >= 0)
-                    {
-                        listaeventos.push({
-                            id: doc.id,
-                            ...doc.data()
-                        });
+                    if(doc.data().titulo) {
+                        if(doc.data().titulo.indexOf(pesquisa) >= 0)
+                            {
+                                listaeventos.push({
+                                    id: doc.id,
+                                    ...doc.data()
+                                });
+                            }
                     }
                 });
 

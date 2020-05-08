@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import './style.css';
-import { Link, Redirect } from 'react-router-dom';
 import Navbar from '../../components/navbar/';
 
 import firebase from '../../config/firebase';

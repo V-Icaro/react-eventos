@@ -19,7 +19,7 @@ function EventoDetalhes(props){
             .then(resultado => {
                 setEvento(resultado.data())
 
-                firebase.storage().ref(`imagens/${evento.foto}`).getDownloadURL()
+                firebase.storage().ref(`imagens/${resultado.data().foto}`).getDownloadURL()
                     .then(url => setUrlImg(url));
             })
     })
@@ -31,7 +31,7 @@ function EventoDetalhes(props){
             <div className="row">
                 <img src={urlImg} className="img-banner"/>
                 <div className="col-12 text-right mt-1 views">
-                <i class="fas fa-eye"></i> <span>{evento.visualizacoes}</span>
+                <i className="fas fa-eye"></i> <span>{evento.visualizacoes}</span>
                 </div>
                 <h3 className="mx-auto mt-5 titulo"><strong>{evento.titulo}</strong></h3>
                 

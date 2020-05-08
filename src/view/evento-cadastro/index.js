@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import './style.css';
-import { Link } from 'react-router-dom';
 import Navbar from '../../components/navbar/';
 import { useSelector } from 'react-redux';
 
@@ -67,12 +66,12 @@ function EventoCadastro(){
 
                 <div className="form-group">
                     <label>Tipo do Evento</label>
-                    <select onChange={(e) => setTipo(e.target.value)} className="form-control">
-                        <option disabled selected value>--Selecione um tipo --</option>
-                        <option>Festa</option>
-                        <option>Teatro</option>
-                        <option>Show</option>
-                        <option>Evento</option>
+                    <select defaultValue={'DEFAULT'} onChange={(e) => setTipo(e.target.value)} className="form-control">
+                        <option value="DEFAULT" disabled>--Selecione um tipo --</option>
+                        <option value="Festa" >Festa</option>
+                        <option value="Teatro" >Teatro</option>
+                        <option value="Show" >Show</option>
+                        <option value="Evento" >Evento</option>
                     </select>
                 </div>
 
@@ -98,7 +97,7 @@ function EventoCadastro(){
                 </div>
 
                 {
-                    load ? <div class="spinner-border text-danger" role="status"><span class="sr-only">Loading...</span></div>    
+                    load ? <div className="spinner-border text-danger" role="status"><span className="sr-only">Loading...</span></div>    
                     : <button onClick={cadastrar} type="button" className="btn btn-lg btn-block btn-enviar">Publicar Evento</button>
                 }
 
