@@ -1,9 +1,9 @@
 .navbar {
-    background-color: #614ea6;
+    background-color: #59bbbe;
 }
 
 .nav-item a{
-    color: #fff;
+    color: rgb(87, 72, 72);
     transition: .3s ease-in;
 }
 

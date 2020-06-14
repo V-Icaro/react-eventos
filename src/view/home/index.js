@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './style.css';
 import { useSelector } from 'react-redux';
+import { Redirect } from 'react-router-dom';
 
 /* --COMPONENTS-- */ 
 import Navbar from '../../components/navbar/';
@@ -17,12 +18,11 @@ function Home({match}){
     const usuario = useSelector(state => state.usuarioEmail);
 
     useEffect(() => {
-
         if(match.params.parametro){
-            firebase.firestore().collection('eventos').where('usuario', '==', usuario).get()
+            firebase.firestore().collection('Equipamentos').where('usuario', '==', usuario).get()
             .then(async (resultado) => {
                 await resultado.docs.forEach(doc => {
-                    if(doc.data().titulo.indexOf(pesquisa) >= 0)
+                    if(doc.data().patrimonio.indexOf(pesquisa) >= 0)
                     {
                         listaeventos.push({
                             id: doc.id,
@@ -34,39 +34,51 @@ function Home({match}){
                 setEventos(listaeventos);
             });
         }else{
-            firebase.firestore().collection('eventos').get()
+            firebase.firestore().collection('Equipamentos').get()
             .then(async (resultado) => {
                 await resultado.docs.forEach(doc => {
-                    if(doc.data().titulo) {
-                        if(doc.data().titulo.indexOf(pesquisa) >= 0)
+                        if(doc.data().patrimonio.indexOf(pesquisa) >= 0)
+                            {
+                                listaeventos.push({
+                                    id: doc.id,
+                                    ...doc.data()
+                                });
+                            }else if(doc.data().usuario.indexOf(pesquisa) >= 0)
                             {
                                 listaeventos.push({
                                     id: doc.id,
                                     ...doc.data()
                                 });
                             }
-                    }
-                });
-
+                })
                 setEventos(listaeventos);
             });
         }
 
         
-    }, [eventos]);
+    },[pesquisa]);
 
     return (
         <>
         <Navbar /> 
 
-        <div className="row p-5">
-            <h3 className="mx-auto p-5">Eventos</h3>
-            <input onChange={(e) => setPesquisa(e.target.value)} type="text" className="form-control text-center" placeholder="Pesquisar eventos"/>
+        {
+            useSelector(state => state.usuarioLogado) === 0 ? <Redirect to="/" /> : null
+        }
+
+        <div className="row p-5 home">
+            <h3 className="mx-auto p-5">EQUIPAMENTOS</h3>
+            <input onChange={(e) => setPesquisa(e.target.value)} type="text" className="form-control text-center" placeholder="Pesquisar Equipamento"/>
         </div>
         
-        <div className="row p-3">
-        {eventos.map(item => <EventoCard key={item.id} id={item.id} img={item.foto} titulo={item.titulo} detalhes={item.detalhes} visualizacoes={item.visualizacoes}/>)}
+        <div className="row p-3 mb-2">
+        
+        
+
+        { 
             
+            eventos.map(item => <EventoCard key={item.id} id={item.id} patrimonio={item.patrimonio} detalhes={item.detalhes} tipo={item.tipo} usuario={item.usuario} criacao={item.criacao} />)    
+        }
         </div>
 
         </>

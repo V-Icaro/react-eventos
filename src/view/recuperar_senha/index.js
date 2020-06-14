@@ -22,7 +22,6 @@ export default function RecuperarSenha(){
     return(
         <>
             <Navbar />
-
             
                 <form className="text-center form-login mx-auto mt-5">
                     <h1 className="mb-3 font-weight-bold">Recuperar Senha</h1>

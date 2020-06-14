@@ -1,14 +1,14 @@
 import firebase from 'firebase';
 
 const firebaseConfig = {
-    apiKey: "AIzaSyALdzYzuVP99scIIWu1RdvvMHpL-rqdFmE",
-    authDomain: "eventos-1119b.firebaseapp.com",
-    databaseURL: "https://eventos-1119b.firebaseio.com",
-    projectId: "eventos-1119b",
-    storageBucket: "eventos-1119b.appspot.com",
-    messagingSenderId: "304142639336",
-    appId: "1:304142639336:web:e386e888bd901c0fb4e95d"
-  };
+  apiKey: "AIzaSyA5iD6GADhAXU7yl6vhjyaikPFybB9n5lI",
+  authDomain: "cati-e0320.firebaseapp.com",
+  databaseURL: "https://cati-e0320.firebaseio.com",
+  projectId: "cati-e0320",
+  storageBucket: "cati-e0320.appspot.com",
+  messagingSenderId: "750073173015",
+  appId: "1:750073173015:web:af718cf41f1a239f133852"
+};
   
   // Initialize Firebase
 

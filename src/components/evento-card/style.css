@@ -4,8 +4,8 @@
 }
 
 .btn-detalhes {
-    background-color: #614ea6;
-    color: #fff;
+    background-color: #59bbbe;
+    color: rgb(14, 13, 13);
 }
 
 .btn-detalhes:hover {
@@ -14,7 +14,11 @@
 }
 
 .card-text {
+    border: 1px solid black;
+    border-radius: 5%;
+    padding: 5%;
     max-height: 100px;
+    min-height: 100px;
     overflow: hidden;
 }
 
@@ -24,3 +28,9 @@
     min-width: 100px;
 }
 
+.card-body {
+    border: 2px solid black;
+    border-radius: 10%;
+    min-height: 350px;
+    max-height: 350px;
+}

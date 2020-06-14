@@ -21,7 +21,7 @@ function Login(){
                 setMsgTipo('sucesso');
                 setTimeout(() => {
                     dispatch({type: 'LOG_IN', usuarioEmail: email});
-                },2000)
+                },1000)
             }).catch(erro => {
                 setMsgTipo('erro');
             })
@@ -34,14 +34,14 @@ function Login(){
         <div className="login-content d-flex align-items-center">
 
             {
-                useSelector(state => state.usuarioLogado) > 0 ? <Redirect to="/" /> : null
+                useSelector(state => state.usuarioLogado) > 0 ? <Redirect to="/home" /> : null
             }
             
 
             <form className="form-signin mx-auto">
 
             <div className="text-center mb-4">
-            <i className="fas fa-icons text-white fa-7x mb-5"></i>
+            <i className="fas fa-laptop text-white fa-7x mb-5"></i>
             <h1 className="h3 mb-3 font-weight-normal text-white font-weight-bold">Login</h1>
             </div>
         
@@ -54,15 +54,13 @@ function Login(){
             <button onClick={logar} className="btn btn-lg btn-login btn-block" type="button">Logar</button>
 
             <div className="msg-login text-white text-center my-5">
-                {msgTipo === 'sucesso' && <span><strong>WoW!</strong> Você está conectado! &#128526;</span>}
+                {msgTipo === 'sucesso' && <span> Você está conectado!</span>}
                     
-                {msgTipo === 'erro' && <span><strong>Ops!</strong> Verifique seus dados! &#128546;</span>}
+                {msgTipo === 'erro' && <span>Verifique seus dados!</span>}
             </div>
 
             <div className="opcoes-login mt-5">
                 <Link to="/recuperarsenha" className="mx-2">Recuperar Senha</Link>
-                <span className="text-white">&#9733;</span>
-                <Link to="/novousuario" className="mx-2">Quero cadastrar</Link>
             </div>
             
 
