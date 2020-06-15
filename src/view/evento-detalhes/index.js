@@ -19,6 +19,13 @@ function EventoDetalhes(props){
     function remover() {
         let doc = new jsPDF();
 
+        //inputs
+        doc.setFontSize(14);
+        doc.text(evento.patrimonio,44,77)
+        doc.text(evento.patrimonio,166,77)
+        doc.text(evento.patrimonio,44,219)
+        doc.text(evento.patrimonio,166,219)
+
         doc.setFontSize(17);
         doc.text('NOTA DE TRÂNSITO DE BENS MATERIAIS',50,13)
         doc.text('NOTA DE TRÂNSITO DE BENS MATERIAIS',50,159) //P2
