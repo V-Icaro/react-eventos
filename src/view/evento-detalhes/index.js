@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import './style.css';
+import './detalhes.css';
 import { useSelector } from 'react-redux';
 import { Link, Redirect } from 'react-router-dom';
 
@@ -8,7 +8,7 @@ import { Link, Redirect } from 'react-router-dom';
 import Navbar from '../../components/navbar/';
 
 import firebase from '../../config/firebase';
-import jsPDF from 'jspdf'
+import jsPDF from 'jspdf';
 
 function EventoDetalhes(props){
 
@@ -21,9 +21,9 @@ function EventoDetalhes(props){
 
         //inputs
         doc.setFontSize(14);
-        doc.text(evento.patrimonio,44,77)
+        doc.text(evento.descricao,44,77)
         doc.text(evento.patrimonio,166,77)
-        doc.text(evento.patrimonio,44,219)
+        doc.text(evento.descricao,44,219)
         doc.text(evento.patrimonio,166,219)
 
         doc.setFontSize(17);
@@ -176,7 +176,7 @@ function EventoDetalhes(props){
     },[props.match.params.id])
 
     const data = new Date(props.match.params.data*1000).toLocaleString()
-
+    //console.log('detalhes')
     return(
         <>
         <Navbar />
@@ -189,35 +189,47 @@ function EventoDetalhes(props){
             liberar === 1 && <Redirect to="/home" /> 
         }
 
-        <div className="container-fluid aling-items-center">
-            
-            <div className="row mt-5 d-flex justify-content-around mx-5">
-                <div className="col-md-3 col-sm-12 box-info p-3">
-                    <i className="fas fa-ticket-alt fa-2x"></i>
-                    <h5><strong>Patrimônio</strong></h5>
-                    <span className="mt-3">{evento.patrimonio}</span>
-                </div>
-            
-                <div className="col-md-3 col-sm-12 box-info p-3">
-                    <i className="fas fa-ticket-alt fa-2x"></i>
-                    <h5><strong>Tipo</strong></h5>
-                    <span className="mt-3">{evento.tipo}</span>
-                </div>
-            
-
-            
-                <div className="col-md-3 col-sm-12 box-info p-3">
-                    <i className="fas fa-calendar-alt fa-2x"></i>
-                    <h5><strong>Criação</strong></h5>
-                    <span className="mt-3">{data}</span>
-                </div>
-            </div>
-
-            <h5 className="text-center mt-2"><strong>Detalhes do Evento</strong></h5>
-            <div className="col-3 text-center box-detalhes my-3 mx-auto">
-                    <p>{evento.detalhes}</p>
-            </div>
-                
+            <table className="table table-hover table-dark">
+                <tbody>
+                    <tr>
+                        <th scope="row">Patrimônio</th>
+                        <td>{evento.patrimonio}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Descrição</th>
+                        <td>{evento.descricao}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Modelo</th>
+                        <td>{evento.modelo}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Patrimônio</th>
+                        <td>{evento.patrimonio}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Descrição</th>
+                        <td>{evento.descricao}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Modelo</th>
+                        <td>{evento.modelo}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Patrimônio</th>
+                        <td>{evento.patrimonio}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Descrição</th>
+                        <td>{evento.descricao}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Modelo</th>
+                        <td>{evento.modelo}</td>
+                    </tr>
+                </tbody>
+            </table>
+                        
             
 
             {
@@ -228,7 +240,8 @@ function EventoDetalhes(props){
             
                 <button onClick={remover} type="button" className="btn btn-ls btn-block btn-liberar mx-auto mt-20">Liberar</button>
             
-        </div>
+        
+        
         </>
     )
 }

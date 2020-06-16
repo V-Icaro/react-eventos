@@ -1,3 +1,8 @@
+.cadastro {
+    width: 100%;
+    margin-top: 5px;
+}
+
 .btn-enviar {
     background-color: #614EA6;
     color: #fff;
@@ -6,4 +11,14 @@
 .btn-enviar:hover {
     background-color: #f21667;
     color: #fff;
+}
+
+.form-input {
+    width: 50%;
+    text-align: center;
+    margin-top: 5px;
+}
+
+.form-control {
+    border: 3px solid #ced4da;
 }

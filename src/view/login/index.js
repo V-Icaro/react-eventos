@@ -29,7 +29,7 @@ function Login(){
     }
 
 
-
+    //console.log('login')
     return(
         <div className="login-content d-flex align-items-center">
 
