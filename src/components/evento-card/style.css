@@ -1,11 +1,6 @@
-.rodape-card {
-    color: #614ea6;
-    height: 35px;
-}
-
 .btn-detalhes {
-    background-color: #59bbbe;
-    color: rgb(14, 13, 13);
+    background-color: #2e3535;
+    color: #fff;
 }
 
 .btn-detalhes:hover {
@@ -16,29 +11,12 @@
 .card-text {
     border: 1px solid black;
     border-radius: 5%;
-    padding: 5%;
-    max-height: 100px;
-    min-height: 100px;
+    padding: 1%;
     overflow: hidden;
 }
 
-.img-cartao {
-    max-height: 200px;
-    min-height: 100px;
-    min-width: 100px;
-}
-
-.card-body {
+.card {
     border: 2px solid black;
     border-radius: 10%;
-    min-height: 250px;
-    max-height: 250px; 
 }
 
-h6 {
-    font-size: medium;
-}
-
-.icone {
-    color: black;
-}

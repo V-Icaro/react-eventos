@@ -1,20 +1,19 @@
 import React, { useState, useEffect } from 'react';
-import './style.css';
-import Navbar from '../../components/navbar/';
+import './cadastro-estabilizador.css';
+import Navbar from '../../../components/navbar/';
 import { useSelector } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 
-import firebase from '../../config/firebase';
+import firebase from '../../../config/firebase';
 import 'firebase/auth';
 
-function EventoCadastro(props){
+function CadastroEstabilizador(props){
 
     const [msgTipo, setMsgTipo] = useState('');
     const [patrimonio, setPatrimonio] = useState('');
     const [descricao, setDescricao] = useState('');
     const [modelo, setModelo] = useState('');
-    const [serial, setSerial] = useState('');
-    const [tipo, setTipo] = useState('');
+    const [potencia, setPotencia] = useState('');
     const [detalhes, setDetalhes] = useState('');
     const [status, setStatus] = useState('');
     const [setor, setSetor] = useState('');
@@ -26,14 +25,13 @@ function EventoCadastro(props){
 
     useEffect(() => {
         if(props.match.params.id){
-        firebase.firestore().collection('Equipamentos').doc(props.match.params.id).get()
+        firebase.firestore().collection('estabilizadores').doc(props.match.params.id).get()
             .then(resultado => {
                 setPatrimonio(resultado.data().patrimonio)
-                setTipo(resultado.data().tipo)
                 setDetalhes(resultado.data().detalhes)
                 setDescricao(resultado.data().descricao)
                 setModelo(resultado.data().modelo)
-                setSerial(resultado.data().serial)
+                setPotencia(resultado.data().potencia)
                 setStatus(resultado.data().status)
                 setSetor(resultado.data().setor)
             })}
@@ -43,12 +41,11 @@ function EventoCadastro(props){
         setLoad(1);
         setMsgTipo(null);
 
-                db.collection('Equipamentos').doc(props.match.params.id).update({
+                db.collection('estabilizadores').doc(props.match.params.id).update({
                     patrimonio: patrimonio.toUpperCase(),
                     descricao: descricao.toUpperCase(),
                     modelo: modelo.toUpperCase(),
-                    serial: serial.toUpperCase(),
-                    tipo: tipo.toUpperCase(),
+                    potencia: potencia.toUpperCase(),
                     detalhes: detalhes.toUpperCase(),
                     status: status.toUpperCase(),
                     setor: setor.toUpperCase()
@@ -65,13 +62,13 @@ function EventoCadastro(props){
         setLoad(1);
         setMsgTipo(null);
 
-                db.collection('Equipamentos').add({
+                db.collection('estabilizadores').add({
                     patrimonio: patrimonio.toUpperCase(),
                     descricao: descricao.toUpperCase(),
                     modelo: modelo.toUpperCase(),
-                    serial: serial.toUpperCase(),
-                    tipo: tipo.toUpperCase(),
+                    potencia: potencia.toUpperCase(),
                     detalhes: detalhes.toUpperCase(),
+                    tipo: 'estabilizador',
                     usuario: usuarioEmail,
                     status: status.toUpperCase(),
                     setor: setor.toUpperCase(),
@@ -99,10 +96,10 @@ function EventoCadastro(props){
         }
 
             
-        <h3 className="text-center font-weight-bold my-2">{props.match.params.id ? 'Atualizar Entrada' : 'Cadastrar Equipamento'}</h3>
+        <h3 className="text-center font-weight-bold my-2">{props.match.params.id ? 'Atualizar Estabilizador' : 'Cadastrar Estabilizador'}</h3>
             
 
-        <div className="col-12 d-flex align-items-center cadastro">
+        <div className="col-12 d-flex">
             
             <form className="form-input mx-auto" /*onSubmit={cadastrar}*/>
                 <div className="form-group">
@@ -111,7 +108,7 @@ function EventoCadastro(props){
                 </div>
 
                 <div className="form-group">
-                    <label>Descrição</label>
+                    <label>Marca</label>
                     <input onChange={(e) => setDescricao(e.target.value)} type="text" className="form-control" value={descricao && descricao} required/>
                 </div>
 
@@ -121,8 +118,8 @@ function EventoCadastro(props){
                 </div>
 
                 <div className="form-group">
-                    <label>Número de Série</label>
-                    <input onChange={(e) => setSerial(e.target.value)} type="text" className="form-control" value={serial && serial} required/>
+                    <label>Potência</label>
+                    <input onChange={(e) => setPotencia(e.target.value)} type="text" className="form-control" value={potencia && potencia} required/>
                 </div>
 
                 <div className="form-group">
@@ -130,7 +127,7 @@ function EventoCadastro(props){
                     <input onChange={(e) => setSetor(e.target.value)} type="text" className="form-control" value={setor && setor} required/>
                 </div>
 
-                <div className="form-group">
+                {/*<div className="form-group">
                     <label>Tipo de Equipamento</label>
                     <select onChange={(e) => setTipo(e.target.value)} className="form-control" value={tipo && tipo} required>
                         <option value="" selected disabled hidden>--Selecione um tipo --</option>
@@ -140,14 +137,16 @@ function EventoCadastro(props){
                         <option value="Notebook" >Notebook</option>
                         <option value="Fonte" >Fonte</option>
                     </select>
-                </div>
+                </div>*/}
 
                 <div className="form-group">
                     <label>Status</label>
                     <select onChange={(e) => setStatus(e.target.value)} className="form-control" value={status && status} required>
                         <option value="" selected disabled hidden>--Selecione um status --</option>
                         <option value="Manutenção" >Manutenção</option>
-                        <option value="Aguardando Peça" >Aguardando Peça</option>
+                        
+                        <option value="Disponivel" >Disponivel</option>
+                        <option value="Backup" >Backup</option>
                     </select>
                 </div>
 
@@ -166,7 +165,7 @@ function EventoCadastro(props){
             </form>
 
             <div className="msg-login text-center my-1">
-                {msgTipo === 'sucesso' && <span>Equipamento Cadastrado!</span>}
+                {msgTipo === 'sucesso' && <span>Estabilizador Cadastrado!</span>}
                     
                 {msgTipo === 'erro' && <span>Não foi possivel!</span>}
             </div>
@@ -176,4 +175,4 @@ function EventoCadastro(props){
     )
 }
 
-export default EventoCadastro;
+export default CadastroEstabilizador;

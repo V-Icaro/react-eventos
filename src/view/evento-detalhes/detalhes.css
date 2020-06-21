@@ -1,3 +1,20 @@
 .table {
     width: 50%;
+    margin: auto;
+    margin-top: 5px;
+}
+
+.icones {
+    float: center;
+}
+
+.btn-liberar {
+    width: 100px;
+    background-color: #2e3535;
+    color: #fff;
+}
+
+.btn-liberar:hover {
+    background-color: #f21667;
+    color: #fff;
 }

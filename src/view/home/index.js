@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './style.css';
 import { useSelector } from 'react-redux';
-import { Redirect } from 'react-router-dom';
+import { Redirect, Link } from 'react-router-dom';
 
 /* --COMPONENTS-- */ 
 import Navbar from '../../components/navbar/';
@@ -13,6 +13,8 @@ import jsPDF from 'jspdf';
 
 function Home({match}){
 
+    
+    const [tipo, setTipo] = useState('computadores');
     const [eventos, setEventos] = useState([]);
     const [pesquisa, setPesquisa] = useState('');
     let listaeventos = [];
@@ -20,10 +22,16 @@ function Home({match}){
 
     useEffect(() => {
         if(match.params.parametro){
-            firebase.firestore().collection('Equipamentos').where('usuario', '==', usuario).get()
+            firebase.firestore().collection(tipo).where('usuario', '==', usuario).get()
             .then(async (resultado) => {
                 await resultado.docs.forEach(doc => {
-                    if(doc.data().patrimonio.indexOf(pesquisa) >= 0)
+                    if(doc.data().descricao.indexOf(pesquisa) >= 0)
+                    {
+                        listaeventos.push({
+                            id: doc.id,
+                            ...doc.data()
+                        });
+                    }else if(doc.data().patrimonio.indexOf(pesquisa) >= 0)
                     {
                         listaeventos.push({
                             id: doc.id,
@@ -35,16 +43,22 @@ function Home({match}){
                 setEventos(listaeventos);
             });
         }else{
-            firebase.firestore().collection('Equipamentos').get()
+            firebase.firestore().collection(tipo).get()
             .then(async (resultado) => {
                 await resultado.docs.forEach(doc => {
-                        if(doc.data().patrimonio.indexOf(pesquisa) >= 0)
+                        if(doc.data().descricao.indexOf(pesquisa) >= 0)
                             {
                                 listaeventos.push({
                                     id: doc.id,
                                     ...doc.data()
                                 });
                             }else if(doc.data().usuario.indexOf(pesquisa) >= 0)
+                            {
+                                listaeventos.push({
+                                    id: doc.id,
+                                    ...doc.data()
+                                });
+                            }else if(doc.data().patrimonio.indexOf(pesquisa) >= 0)
                             {
                                 listaeventos.push({
                                     id: doc.id,
@@ -57,7 +71,7 @@ function Home({match}){
         }
 
         
-    },[pesquisa]);
+    },[tipo, pesquisa]);
     
 
     function relatorio(){
@@ -87,10 +101,19 @@ function Home({match}){
             doc.line(50, 20, 50, b) // vertical line
             doc.line(150, 20, 150, b) // vertical line
             doc.setFontSize(15)
+            if(element.tipo === 'fonte'){
+                doc.text(element.descricao,7,c)
+                doc.text(element.flu,57,c)
+                doc.text(element.status,157,c)
+            }else if(element.tipo === 'estabilizador'){
+                doc.text(element.patrimonio,7,c)
+                doc.text(element.descricao,57,c)
+                doc.text(element.potencia,157,c)
+            }else{
             doc.text(element.patrimonio,7,c)
             doc.text(element.descricao,57,c)
             doc.text(element.serial,157,c)
-            
+            }
         }
         a += 10;
         doc.line(4, a, 206, a) // horizontal line
@@ -106,13 +129,21 @@ function Home({match}){
         {
             useSelector(state => state.usuarioLogado) === 0 ? <Redirect to="/" /> : null
         }
+        <div className="d-flex">
+            <div className="row mx-auto mt-2 opcoes-bloco">
+                <button onClick={() => {setTipo('computadores')}} type="button" className="btn-detalhes btn-dark my-5 mx-5">Computadores</button>
+                <button onClick={() => {setTipo('fontes')}} type="button" className="btn-detalhes btn-dark my-5">Fontes</button>
+                <button onClick={() => {setTipo('monitores')}} type="button" className="btn-detalhes btn-dark my-5 mx-5">Monitores</button>
+                <button onClick={() => {setTipo('estabilizadores')}} type="button" className="btn-detalhes btn-dark my-5">Estabilizadores</button>
+                <button onClick={() => {setTipo('notebooks')}} type="button" className="btn-detalhes btn-dark my-5 mx-5">Notebooks</button>
+            </div> 
+        </div>
         
-        
-        <div className="row p-5 home">
-            <h3 className="mx-auto p-5">EQUIPAMENTOS</h3>
+        <div className="row p-2 home">
+            <h3 className="mx-auto p-2">{tipo}</h3>
             <input onChange={(e) => setPesquisa(e.target.value)} type="text" className="form-control text-center" placeholder="Pesquisar Equipamento"/>
         </div>
-        <div className="row">
+        <div className="row my-2">
             <button onClick={relatorio} className="mx-auto btn-detalhes">Gerar Relatório</button>
             
         </div>
@@ -122,8 +153,23 @@ function Home({match}){
         
 
         { 
-            
-            eventos.map(item => <EventoCard key={item.id} id={item.id} patrimonio={item.patrimonio} detalhes={item.detalhes} tipo={item.tipo} usuario={item.usuario} criacao={item.criacao} descricao={item.descricao} modelo={item.modelo} />)    
+            tipo === 'computadores' && eventos.map(item => <EventoCard key={item.id} id={item.id} patrimonio={item.patrimonio} detalhes={item.detalhes} tipo={tipo} usuario={item.usuario} criacao={item.criacao} descricao={item.descricao} modelo={item.modelo} setor={item.setor} status={item.status}/>)    
+        }
+
+        { 
+            tipo === 'fontes' && eventos.map(item => <EventoCard key={item.id} id={item.id} tipo={tipo} usuario={item.usuario} criacao={item.criacao} descricao={item.descricao} flu={item.flu} status={item.status} />)    
+        }
+
+        { 
+            tipo === 'monitores' && eventos.map(item => <EventoCard key={item.id} id={item.id} patrimonio={item.patrimonio} detalhes={item.detalhes} tipo={tipo} usuario={item.usuario} criacao={item.criacao} descricao={item.descricao} modelo={item.modelo} setor={item.setor} status={item.status} />)    
+        }
+
+        { 
+            tipo === 'estabilizadores' && eventos.map(item => <EventoCard key={item.id} id={item.id} patrimonio={item.patrimonio} detalhes={item.detalhes} tipo={tipo} usuario={item.usuario} criacao={item.criacao} descricao={item.descricao} modelo={item.modelo} potencia={item.potencia} setor={item.setor} status={item.status}/>)    
+        }
+
+        { 
+            tipo === 'notebooks' && eventos.map(item => <EventoCard key={item.id} id={item.id} patrimonio={item.patrimonio} detalhes={item.detalhes} tipo={tipo} usuario={item.usuario} criacao={item.criacao} descricao={item.descricao} modelo={item.modelo} setor={item.setor} status={item.status} />)    
         }
         </div>
 

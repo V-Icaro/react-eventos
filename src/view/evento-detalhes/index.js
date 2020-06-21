@@ -162,14 +162,14 @@ function EventoDetalhes(props){
 
         doc.save('genereted.pdf');
 
-        firebase.firestore().collection('Equipamentos').doc(props.match.params.id).delete()
+        firebase.firestore().collection(props.match.params.tipo).doc(props.match.params.id).delete()
             .then(() => {
                 setLiberar(1)
             })
     }
 
     useEffect(() => {
-        firebase.firestore().collection('Equipamentos').doc(props.match.params.id).get()
+        firebase.firestore().collection(props.match.params.tipo).doc(props.match.params.id).get()
             .then(resultado => {
                 setEvento(resultado.data())
             })
@@ -189,6 +189,8 @@ function EventoDetalhes(props){
             liberar === 1 && <Redirect to="/home" /> 
         }
 
+        {props.match.params.tipo === "computadores" &&
+        <>
             <table className="table table-hover table-dark">
                 <tbody>
                     <tr>
@@ -204,41 +206,224 @@ function EventoDetalhes(props){
                         <td>{evento.modelo}</td>
                     </tr>
                     <tr>
-                        <th scope="row">Patrimônio</th>
-                        <td>{evento.patrimonio}</td>
+                        <th scope="row">Setor</th>
+                        <td>{evento.setor}</td>
                     </tr>
                     <tr>
-                        <th scope="row">Descrição</th>
-                        <td>{evento.descricao}</td>
+                        <th scope="row">Serial</th>
+                        <td>{evento.serial}</td>
                     </tr>
                     <tr>
-                        <th scope="row">Modelo</th>
-                        <td>{evento.modelo}</td>
+                        <th scope="row">Status</th>
+                        <td>{evento.status}</td>
                     </tr>
                     <tr>
-                        <th scope="row">Patrimônio</th>
-                        <td>{evento.patrimonio}</td>
+                        <th scope="row">Responsavél</th>
+                        <td>{evento.usuario}</td>
                     </tr>
                     <tr>
-                        <th scope="row">Descrição</th>
-                        <td>{evento.descricao}</td>
+                        <th scope="row">Criação</th>
+                        <td>{data}</td>
                     </tr>
                     <tr>
-                        <th scope="row">Modelo</th>
-                        <td>{evento.modelo}</td>
+                        <th scope="row">Detalhes</th>
+                        <td>{evento.detalhes}</td>
                     </tr>
                 </tbody>
             </table>
-                        
-            
-
-            {
-                usuario === evento.usuario &&
-                <Link to={`/editar/${props.match.params.id}`} className="btn-editar"><i className="fas fa-pen-square fa-3x"></i></Link>
+            <div className="row icones">
+            <Link to={`/editar-computador/${props.match.params.id}`} className="btn btn-ls btn-block btn-edicao mx-auto"><i className="fas fa-pen-square fa-3x"></i></Link>
+            <button onClick={remover} type="button" className="btn btn-ls btn-block btn-liberar mx-auto">Liberar</button>
+            </div>
+            </>
             }
 
+        {props.match.params.tipo === "estabilizadores" &&
+        <>
+            <table className="table table-hover table-dark">
+                <tbody>
+                    <tr>
+                        <th scope="row">Patrimônio</th>
+                        <td>{evento.patrimonio}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Descrição</th>
+                        <td>{evento.descricao}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Modelo</th>
+                        <td>{evento.modelo}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Setor</th>
+                        <td>{evento.setor}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Potência</th>
+                        <td>{evento.potencia}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Status</th>
+                        <td>{evento.status}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Responsavél</th>
+                        <td>{evento.usuario}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Criação</th>
+                        <td>{data}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Detalhes</th>
+                        <td>{evento.detalhes}</td>
+                    </tr>
+                </tbody>
+            </table>
+            <div className="row icones">
+            <Link to={`/editar-estabilizador/${props.match.params.id}`} className="btn btn-ls btn-block btn-edicao mx-auto"><i className="fas fa-pen-square fa-3x"></i></Link>
+            <button onClick={remover} type="button" className="btn btn-ls btn-block btn-liberar mx-auto">Liberar</button>
+            </div>
+            </>
+            }
+
+        {props.match.params.tipo === "fontes" &&
+        <>
+            <table className="table table-hover table-dark">
+                <tbody>
+                    <tr>
+                        <th scope="row">Descrição</th>
+                        <td>{evento.descricao}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Flu</th>
+                        <td>{evento.flu}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Status</th>
+                        <td>{evento.status}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Criação</th>
+                        <td>{data}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Responsavél</th>
+                        <td>{evento.usuario}</td>
+                    </tr>
+                </tbody>
+            </table>
+            <div className="row icones">
+            <Link to={`/editar-fonte/${props.match.params.id}`} className="btn btn-ls btn-block btn-edicao mx-auto"><i className="fas fa-pen-square fa-3x"></i></Link>
+            <button onClick={remover} type="button" className="btn btn-ls btn-block btn-liberar mx-auto">Liberar</button>
+            </div>
+            </>
+            }
+
+        {props.match.params.tipo === "monitores" &&
+        <>
+            <table className="table table-hover table-dark">
+                <tbody>
+                    <tr>
+                        <th scope="row">Patrimônio</th>
+                        <td>{evento.patrimonio}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Descrição</th>
+                        <td>{evento.descricao}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Modelo</th>
+                        <td>{evento.modelo}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Serial</th>
+                        <td>{evento.serial}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Setor</th>
+                        <td>{evento.setor}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Status</th>
+                        <td>{evento.status}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Responsavél</th>
+                        <td>{evento.usuario}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Criação</th>
+                        <td>{data}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Detalhes</th>
+                        <td>{evento.detalhes}</td>
+                    </tr>
+                </tbody>
+            </table>
+            <div className="row icones">
+            <Link to={`/editar-monitor/${props.match.params.id}`} className="btn btn-ls btn-block btn-edicao mx-auto"><i className="fas fa-pen-square fa-3x"></i></Link>
+            <button onClick={remover} type="button" className="btn btn-ls btn-block btn-liberar mx-auto">Liberar</button>
+            </div>
+            </>
+            }
             
-                <button onClick={remover} type="button" className="btn btn-ls btn-block btn-liberar mx-auto mt-20">Liberar</button>
+            {props.match.params.tipo === "notebooks" &&
+        <>
+            <table className="table table-hover table-dark">
+                <tbody>
+                    <tr>
+                        <th scope="row">Patrimônio</th>
+                        <td>{evento.patrimonio}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Descrição</th>
+                        <td>{evento.descricao}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Modelo</th>
+                        <td>{evento.modelo}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Setor</th>
+                        <td>{evento.setor}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Serial</th>
+                        <td>{evento.serial}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Código do Adaptador</th>
+                        <td>{evento.adaptador}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Status</th>
+                        <td>{evento.status}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Responsavél</th>
+                        <td>{evento.usuario}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Criação</th>
+                        <td>{data}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Detalhes</th>
+                        <td>{evento.detalhes}</td>
+                    </tr>
+                </tbody>
+            </table>
+            <div className="row icones">
+            <Link to={`/editar-notebook/${props.match.params.id}`} className="btn btn-ls btn-block btn-edicao mx-auto"><i className="fas fa-pen-square fa-3x"></i></Link>
+            <button onClick={remover} type="button" className="btn btn-ls btn-block btn-liberar mx-auto">Liberar</button>
+            </div>
+            </>
+            }
+            
+
+                
             
         
         
