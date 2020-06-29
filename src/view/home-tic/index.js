@@ -1,33 +1,33 @@
 import React, { useState, useEffect } from 'react';
-import './home.css';
+import './home-tic.css';
 import { useSelector } from 'react-redux';
-import { Redirect } from 'react-router-dom';
+import { Redirect, Link } from 'react-router-dom';
 
 /* --COMPONENTS-- */ 
 import Navbar from '../../components/navbar/';
 import EventoCard from '../../components/evento-card';
-import { Link } from 'react-router-dom';
 
 import firebase from '../../config/firebase';
 import 'firebase/storage';
 import jsPDF from 'jspdf';
 
-function Home({match}){
+function HomeTic({match}){
 
     
     const [tipo, setTipo] = useState('computadores');
     const [eventos, setEventos] = useState([]);
     const [pesquisa, setPesquisa] = useState('');
+    const [status, setStatus] = useState('DISPONIVEL');
     let listaeventos = [];
     const usuario = useSelector(state => state.usuarioEmail);
-    const contrato = 'cagece';
-    const [status, setStatus] = useState('DISPONIVEL');
+    const contrato = 'tic'
+    const [quantidadeD, setQuantidadeD] = useState('');
+    const [quantidadeI, setQuantidadeI] = useState('');
 
     useEffect(() => {
         
-            firebase.firestore().collection(tipo).where('contrato', '==', contrato).where('status', '==', status).get()
+        firebase.firestore().collection(tipo).where('contrato', '==', contrato).where('status', '==', status).get()
             .then(async (resultado) => {
-                console.log(resultado)
                 await resultado.docs.forEach(doc => {
                         if(doc.data().descricao.indexOf(pesquisa) >= 0)
                             {
@@ -50,11 +50,11 @@ function Home({match}){
                             }
                 })
                 setEventos(listaeventos);
-            });
-        
+            })
 
-        
     },[tipo, pesquisa, status]);
+
+    
     
 
     function relatorio(){
@@ -73,6 +73,7 @@ function Home({match}){
         doc.text('Número de Série',157,27)
         for (let index = 0; index < eventos.length; index++) {
             const element = eventos[index];
+            console.log(element)
             a+=10;
             b+=10;
             c+=10;
@@ -103,7 +104,7 @@ function Home({match}){
     }
 
 
-    console.log(tipo)
+    //console.log('home')
     return (
         <>
         <Navbar /> 
@@ -120,9 +121,8 @@ function Home({match}){
                 <button onClick={() => {setTipo('notebooks')}} type="button" className="btn-detalhes btn-dark my-5 mx-5">Notebooks</button>
             </div> 
         </div>
-        
         <hr></hr>
-        <div className="row p-2 home">
+        <div className="row p-2">
             <h3 className="mx-auto p-2">{tipo}</h3>
         </div>
         <div className="row p-2">
@@ -130,25 +130,24 @@ function Home({match}){
         </div>
         <hr></hr>
         <div className="row my-2">
-            <div className="mx-auto dropdown mx-2">
+        <div className="mx-auto dropdown mx-2">
                 <button className="btn btn-light dropdown-toggle btn-sm text-white" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     Cadastrar
                 </button>
-                    <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                        <Link className="dropdown-item"  to="/cadastro-computador">Computador</Link>
-                        <Link className="dropdown-item"  to="/cadastro-notebook">Notebook</Link>
-                        <Link className="dropdown-item"  to="/cadastro-fonte">Fonte</Link>
-                        <Link className="dropdown-item"  to="/cadastro-estabilizador">Estabilizador</Link>
-                        <Link className="dropdown-item"  to="/cadastro-monitor">Monitor</Link>
-                    </div>
+                <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    <Link className="dropdown-item"  to="/cadastro-computador">Computador</Link>
+                    <Link className="dropdown-item"  to="/cadastro-notebook">Notebook</Link>
+                    <Link className="dropdown-item"  to="/cadastro-fonte">Fonte</Link>
+                    <Link className="dropdown-item"  to="/cadastro-estabilizador">Estabilizador</Link>
+                    <Link className="dropdown-item"  to="/cadastro-monitor">Monitor</Link>
+                </div>
             </div>
             <button onClick={relatorio} className="mx-auto btn-detalhes">Gerar Relatório</button>
-            <button onClick={() => setStatus('DISPONIVEL')} className="mx-auto btn-on">Disponiveis</button>
-            <button onClick={() => setStatus('MANUTENCAO')} className="mx-auto btn-off">Indiponiveis</button>
+            <button onClick={() => setStatus('DISPONIVEL')} className="mx-auto btn-on">Disponiveis {quantidadeD}</button>
+            <button onClick={() => setStatus('MANUTENCAO')} className="mx-auto btn-off">indiponiveis {quantidadeI}</button>
             
         </div>
         <hr></hr>
-        
         <div className="row p-3 mb-2">
         
         
@@ -178,4 +177,4 @@ function Home({match}){
     )
 }
 
-export default Home;
+export default HomeTic;

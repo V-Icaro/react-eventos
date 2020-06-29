@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import './style.css';
+import './evento-cadastro.css';
 import Navbar from '../../components/navbar/';
 import { useSelector } from 'react-redux';
 import { Redirect } from 'react-router-dom';

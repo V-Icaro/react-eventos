@@ -12,7 +12,7 @@
 }
 
 .btn-login:hover {
-    background-color: #f21667;
+    background-color: tomato;
     color: #fff;
 }
 
@@ -24,7 +24,7 @@
 
 .opcoes-login a:hover{
     text-decoration: none;
-    color: #f21667;
+    color: tomato;
 }
 
 .form-signin {

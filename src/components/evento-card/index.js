@@ -74,6 +74,19 @@ function EventoCard(props){
                 </div>
             </div>
             }
+
+            {props.tipo === 'pinpad' &&   
+            <div className="card">
+                <div className="card-body">
+                    <h5 className="card-title">Marca: {props.descricao}</h5>
+                    <p className="card-text">Modelo: {props.modelo}</p>
+                    <p className="card-text">Quantidade: {props.quantidade}</p>
+                    <p className="card-text">Responsavél: {props.usuario}</p>
+                    <p className="card-text">Criação: {data}</p>
+                    <Link to={"/detalhes/" + props.id +"/"+ props.criacao.seconds +"/"+props.tipo} className="btn btn-sm btn-detalhes text-weight-600">DETALHES</Link>
+                </div>
+            </div>
+            }
         </div>
         
         

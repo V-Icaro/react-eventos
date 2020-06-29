@@ -1,33 +1,31 @@
 import React, { useState, useEffect } from 'react';
-import './home.css';
+import './home-tfl.css';
 import { useSelector } from 'react-redux';
-import { Redirect } from 'react-router-dom';
+import { Redirect, Link } from 'react-router-dom';
 
 /* --COMPONENTS-- */ 
 import Navbar from '../../components/navbar/';
 import EventoCard from '../../components/evento-card';
-import { Link } from 'react-router-dom';
 
 import firebase from '../../config/firebase';
 import 'firebase/storage';
 import jsPDF from 'jspdf';
 
-function Home({match}){
+function HomeTfl({match}){
 
     
-    const [tipo, setTipo] = useState('computadores');
+    const [tipo, setTipo] = useState('pinpad');
     const [eventos, setEventos] = useState([]);
     const [pesquisa, setPesquisa] = useState('');
+    const [status, setStatus] = useState('DISPONIVEL');
     let listaeventos = [];
     const usuario = useSelector(state => state.usuarioEmail);
-    const contrato = 'cagece';
-    const [status, setStatus] = useState('DISPONIVEL');
+    const contrato = 'tfl'
 
     useEffect(() => {
         
-            firebase.firestore().collection(tipo).where('contrato', '==', contrato).where('status', '==', status).get()
+        firebase.firestore().collection(tipo).where('contrato', '==', contrato).where('status', '==', status).get()
             .then(async (resultado) => {
-                console.log(resultado)
                 await resultado.docs.forEach(doc => {
                         if(doc.data().descricao.indexOf(pesquisa) >= 0)
                             {
@@ -35,13 +33,7 @@ function Home({match}){
                                     id: doc.id,
                                     ...doc.data()
                                 });
-                            }else if(doc.data().usuario.indexOf(pesquisa) >= 0)
-                            {
-                                listaeventos.push({
-                                    id: doc.id,
-                                    ...doc.data()
-                                });
-                            }else if(doc.data().patrimonio.indexOf(pesquisa) >= 0)
+                            }else if(doc.data().modelo.indexOf(pesquisa) >= 0)
                             {
                                 listaeventos.push({
                                     id: doc.id,
@@ -50,11 +42,11 @@ function Home({match}){
                             }
                 })
                 setEventos(listaeventos);
-            });
-        
+            })
 
-        
     },[tipo, pesquisa, status]);
+
+    
     
 
     function relatorio(){
@@ -73,6 +65,7 @@ function Home({match}){
         doc.text('Número de Série',157,27)
         for (let index = 0; index < eventos.length; index++) {
             const element = eventos[index];
+            console.log(element)
             a+=10;
             b+=10;
             c+=10;
@@ -103,7 +96,7 @@ function Home({match}){
     }
 
 
-    console.log(tipo)
+    //console.log('home')
     return (
         <>
         <Navbar /> 
@@ -113,16 +106,11 @@ function Home({match}){
         }
         <div className="d-flex">
             <div className="row mx-auto mt-2 opcoes-bloco">
-                <button onClick={() => {setTipo('computadores')}} type="button" className="btn-detalhes btn-dark my-5 mx-5">Computadores</button>
-                <button onClick={() => {setTipo('fontes')}} type="button" className="btn-detalhes btn-dark my-5">Fontes</button>
-                <button onClick={() => {setTipo('monitores')}} type="button" className="btn-detalhes btn-dark my-5 mx-5">Monitores</button>
-                <button onClick={() => {setTipo('estabilizadores')}} type="button" className="btn-detalhes btn-dark my-5">Estabilizadores</button>
-                <button onClick={() => {setTipo('notebooks')}} type="button" className="btn-detalhes btn-dark my-5 mx-5">Notebooks</button>
+                <button onClick={() => {setTipo('pinpad')}} type="button" className="btn-detalhes btn-dark my-5 mx-5">PinPad</button>
             </div> 
         </div>
-        
         <hr></hr>
-        <div className="row p-2 home">
+        <div className="row p-2">
             <h3 className="mx-auto p-2">{tipo}</h3>
         </div>
         <div className="row p-2">
@@ -130,17 +118,13 @@ function Home({match}){
         </div>
         <hr></hr>
         <div className="row my-2">
-            <div className="mx-auto dropdown mx-2">
+        <div className="mx-auto dropdown mx-2">
                 <button className="btn btn-light dropdown-toggle btn-sm text-white" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     Cadastrar
                 </button>
-                    <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                        <Link className="dropdown-item"  to="/cadastro-computador">Computador</Link>
-                        <Link className="dropdown-item"  to="/cadastro-notebook">Notebook</Link>
-                        <Link className="dropdown-item"  to="/cadastro-fonte">Fonte</Link>
-                        <Link className="dropdown-item"  to="/cadastro-estabilizador">Estabilizador</Link>
-                        <Link className="dropdown-item"  to="/cadastro-monitor">Monitor</Link>
-                    </div>
+                <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    <Link className="dropdown-item"  to="/cadastro-pinpad">PinPad</Link>
+                </div>
             </div>
             <button onClick={relatorio} className="mx-auto btn-detalhes">Gerar Relatório</button>
             <button onClick={() => setStatus('DISPONIVEL')} className="mx-auto btn-on">Disponiveis</button>
@@ -148,34 +132,19 @@ function Home({match}){
             
         </div>
         <hr></hr>
-        
         <div className="row p-3 mb-2">
         
         
 
         { 
-            tipo === 'computadores' && eventos.map(item => <EventoCard key={item.id} id={item.id} patrimonio={item.patrimonio} detalhes={item.detalhes} tipo={tipo} usuario={item.usuario} criacao={item.criacao} descricao={item.descricao} modelo={item.modelo} setor={item.setor} status={item.status}/>)    
+            tipo === 'pinpad' && eventos.map(item => <EventoCard key={item.id} id={item.id} tipo={tipo} usuario={item.usuario} criacao={item.criacao} descricao={item.descricao} modelo={item.modelo} status={item.status} quantidade={item.quantidade}/>)    
         }
 
-        { 
-            tipo === 'fontes' && eventos.map(item => <EventoCard key={item.id} id={item.id} tipo={tipo} usuario={item.usuario} criacao={item.criacao} descricao={item.descricao} flu={item.flu} status={item.status} />)    
-        }
-
-        { 
-            tipo === 'monitores' && eventos.map(item => <EventoCard key={item.id} id={item.id} patrimonio={item.patrimonio} detalhes={item.detalhes} tipo={tipo} usuario={item.usuario} criacao={item.criacao} descricao={item.descricao} modelo={item.modelo} setor={item.setor} status={item.status} />)    
-        }
-
-        { 
-            tipo === 'estabilizadores' && eventos.map(item => <EventoCard key={item.id} id={item.id} patrimonio={item.patrimonio} detalhes={item.detalhes} tipo={tipo} usuario={item.usuario} criacao={item.criacao} descricao={item.descricao} modelo={item.modelo} potencia={item.potencia} setor={item.setor} status={item.status}/>)    
-        }
-
-        { 
-            tipo === 'notebooks' && eventos.map(item => <EventoCard key={item.id} id={item.id} patrimonio={item.patrimonio} detalhes={item.detalhes} tipo={tipo} usuario={item.usuario} criacao={item.criacao} descricao={item.descricao} modelo={item.modelo} setor={item.setor} status={item.status} />)    
-        }
+        
         </div>
 
         </>
     )
 }
 
-export default Home;
+export default HomeTfl;

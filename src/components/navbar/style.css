@@ -4,15 +4,24 @@
 }
 
 .nav-item a{
-    color: #fff;
+    color: white;
     transition: .3s ease-in;
+    font-size: 25px;
 }
 
 .nav-item a:hover{
-    color: #f21667;
+    color: tomato;
 }
 
 .navbar-toggler {
     background-color: #fff;
     color: black;
 }
+
+.logo{
+    width: 200px;
+    height: 60px;
+}
+
+
+

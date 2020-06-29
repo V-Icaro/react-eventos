@@ -2,14 +2,15 @@ import React from 'react';
 import './style.css';
 import { Link } from 'react-router-dom';
 import { useSelector, useDispatch} from 'react-redux';
+import img from '../../assets/logo2.jpg';
 
 function Navbar(){
 
     const dispatch = useDispatch();
 
     return (
-        <nav className="navbar navbar-expand-lg">
-            <i className="fas fa-laptop text-white fa-2x mr-2"></i>
+        <nav className="navbar navbar-expand-lg justify-content-between">
+            <img className="logo" src={img} />
                 <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                     <i className="fas fa-bars font-white"></i>
                 </button>
@@ -20,22 +21,19 @@ function Navbar(){
                                 useSelector(state => state.usuarioLogado) > 0 ? 
 
                             <>
-                                <li className="nav-item"><Link className="nav-link" to="/home">Home</Link></li>
+                                <li className="nav-item ml-3"><Link className="nav-link" to="/cagece">Cagece</Link></li>
+                                <li className="nav-item"><Link className="nav-link" to="/tic">Tic</Link></li>
+                                <li className="nav-item"><Link className="nav-link" to="/tfl">TFL</Link></li>
                                 {/*<li className="nav-item"><Link className="nav-link" to="/cadastro">Entrada</Link></li>*/}
-                                <li className="nav-item"><Link className="nav-link" to="/home/meus">Minhas Entradas</Link></li>
 
-                                <div className="dropdown mx-2">
-                                    <button className="btn btn-light dropdown-toggle btn-sm mt-1" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        Cadastrar
-                                    </button>
-                                    <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                        <Link className="dropdown-item"  to="/cadastro-computador">Computador</Link>
-                                        <Link className="dropdown-item"  to="/cadastro-notebook">Notebook</Link>
-                                        <Link className="dropdown-item"  to="/cadastro-fonte">Fonte</Link>
-                                        <Link className="dropdown-item"  to="/cadastro-estabilizador">Estabilizador</Link>
-                                        <Link className="dropdown-item"  to="/cadastro-monitor">Monitor</Link>
-                                    </div>
-                                </div>        
+                                
+                                {/*REMOVER POR ENQUANTO - LISTA ENTRADA POR USUARIO LOGADO
+                                <li className="nav-item"><Link className="nav-link" to="/home/meus">Minhas Entradas</Link></li>
+                                */}
+
+                                
+                                 
+                                
 
                                 <li className="nav-item"><Link to="#" className="nav-link" onClick={() => dispatch({type: 'LOG_OUT'})} >Sair</Link></li>
                             </>
@@ -47,6 +45,8 @@ function Navbar(){
                             }
 
                         </ul>
+                        
+            
                     </div>      
         </nav>
     )

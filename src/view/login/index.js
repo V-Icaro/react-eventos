@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import './login.css';
 import { Link, Redirect } from 'react-router-dom';
+import img from '../../assets/logo2.jpg'
 
 import firebase from '../../config/firebase';
 import 'firebase/auth';
@@ -34,15 +35,15 @@ function Login(){
         <div className="login-content d-flex align-items-center">
 
             {
-                useSelector(state => state.usuarioLogado) > 0 ? <Redirect to="/home" /> : null
+                useSelector(state => state.usuarioLogado) > 0 ? <Redirect to="/cagece" /> : null
             }
             
 
             <form className="form-signin mx-auto">
 
             <div className="text-center mb-4">
-            <i className="fas fa-laptop text-white fa-7x mb-5"></i>
-            <h1 className="h3 mb-3 font-weight-normal text-white font-weight-bold">Login</h1>
+            <img src={img} />
+            <h1 className="h3 mb-3 my-3 font-weight-normal text-white font-weight-bold">Login</h1>
             </div>
         
             

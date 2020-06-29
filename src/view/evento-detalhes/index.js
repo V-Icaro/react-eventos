@@ -14,7 +14,7 @@ function EventoDetalhes(props){
 
     const [evento, setEvento] = useState({});
     const [liberar, setLiberar] = useState(0);
-    const usuario = useSelector(state => state.usuarioEmail);
+    //const usuario = useSelector(state => state.usuarioEmail);
 
     function remover() {
         let doc = new jsPDF();
@@ -422,7 +422,38 @@ function EventoDetalhes(props){
             </>
             }
             
-
+            {props.match.params.tipo === "pinpad" &&
+        <>
+            <table className="table table-hover table-dark">
+                <tbody>
+                    <tr>
+                        <th scope="row">Descrição</th>
+                        <td>{evento.descricao}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Modelo</th>
+                        <td>{evento.modelo}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Status</th>
+                        <td>{evento.status}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Responsavél</th>
+                        <td>{evento.usuario}</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">Criação</th>
+                        <td>{data}</td>
+                    </tr>
+                </tbody>
+            </table>
+            <div className="row icones">
+            <Link to={`/editar-pinpad/${props.match.params.id}`} className="btn btn-ls btn-block btn-edicao mx-auto"><i className="fas fa-pen-square fa-3x"></i></Link>
+            <button onClick={remover} type="button" className="btn btn-ls btn-block btn-liberar mx-auto">Liberar</button>
+            </div>
+            </>
+            }
                 
             
         
