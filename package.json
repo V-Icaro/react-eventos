@@ -9,7 +9,7 @@
     "@testing-library/user-event": "^7.2.1",
     "date-fns": "^2.14.0",
     "firebase": "^7.14.2",
-    "jspdf": "^1.5.3",
+    "jspdf": "^2.3.1",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-favicon": "0.0.18",
